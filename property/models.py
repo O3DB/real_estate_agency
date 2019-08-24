@@ -34,14 +34,14 @@ class Flat(models.Model):
 
 
 class Owner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='Собственник')
-    owner_phonenumber = models.CharField("Номер владельца", max_length=20)
+    owner = models.CharField("ФИО владельца", max_length=200)
+    owner_phonenumber = models.CharField("Номер владельца", max_length=20, unique=True)
     owner_phone_pure = PhoneNumberField("Нормализованный номер владельца", blank=True)
     owner_flats = models.ManyToManyField(Flat, related_name='owners',
                                          verbose_name='Квартиры в собственности')
 
     def __str__(self):
-        return f'{self.user.username}'
+        return f'{self.owner}'
 
 
 class Complaint(models.Model):
