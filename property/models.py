@@ -19,7 +19,7 @@ class Flat(models.Model):
     living_area = models.IntegerField("количество жилых кв.метров", null=True, db_index=True)
 
     has_balcony = models.NullBooleanField("Наличие балкона", null=True, db_index=True)
-    active = models.NullBooleanField("Активно-ли объявление", db_index=True)
+    active = models.BooleanField("Активно-ли объявление", db_index=True)
     construction_year = models.IntegerField("Год постройки здания", null=True, db_index=True)
     new_building = models.BooleanField(null=True, verbose_name='Новостройка')
 
@@ -31,9 +31,9 @@ class Flat(models.Model):
 
 
 class Owner(models.Model):
-    owner = models.CharField("ФИО владельца", max_length=200, db_index=True)
+    owner = models.CharField("ФИО владельца", max_length=200)
     owner_phonenumber = models.CharField("Номер владельца", max_length=20, unique=True)
-    owner_phone_pure = PhoneNumberField("Нормализованный номер владельца", blank=True, db_index=True)
+    owner_phone_pure = PhoneNumberField("Нормализованный номер владельца", blank=True)
     owner_flats = models.ManyToManyField(Flat, related_name='owners',
                                          verbose_name='Квартиры в собственности')
 
