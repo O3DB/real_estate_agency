@@ -10,10 +10,13 @@ def transfer_owners(apps, schema_editor):
     flats = Flat.objects.all()
 
     for flat in flats:
-        owner = Owner(owner=flat.owner,
-                      owner_phonenumber=flat.owners_phonenumber,
-                      owner_phone_pure=flat.owner_phone_pure)
-        owner.save()
+        Owner.objects.get_or_create(
+            owner_phonenumber=flat.owners_phonenumber,
+            defaults={
+                owner=flat.owner,
+                owner_phone_pure=flat.owner_phone_pure,
+            }
+        )
 
 
 class Migration(migrations.Migration):
